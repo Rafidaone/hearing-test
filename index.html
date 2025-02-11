@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hearing Test</title>
+
+    <style>
+
+
+
+
+body{
+    background-color: rgb(202, 204, 218);
+
+}
+
+button{
+
+    background-color: rgba(13, 193, 22, 0.2);
+    font-size: 17px;
+    text-align: center;
+    border-width: 4px;
+    border-color: rgba(13, 113, 193, 0.08);
+    border-radius: 8px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 2px;
+    color: rgb(54, 54, 54);
+
+}
+
+textarea{
+
+background-color: rgb(172, 216, 185);
+font-size: 13px;
+text-align: left;
+border-width: 4px;
+border-color: rgba(13, 113, 193, 0.08);
+border-radius: 8px;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+letter-spacing: 2px;
+color: rgb(54, 54, 54);
+
+}
+
+h1{
+font-family: Arial, Helvetica, sans-serif;
+text-shadow: 0px 2px 6px rgba(37, 93, 249, 0.766);
+
+
+}
+
+
+    </style>
+</head>
+<body>
+<h1>Hearing Test</h1>
+
+<p id="info">enter perceived word, spelling matters!</p>
+
+  <textarea placeholder="word goes here"></textarea>
+  <button onclick="subBtu();">Submit</button>
+  <button onclick="newWord();">New Word</button>
+
+    <script>
+        // word list from witch random words are pulled from
+        var words = ["know", "no", "but", "butt", "cite", "sight", "flower", "flour", "Your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "Onomatopoeia", "contract", "table", "door", "trash", "rubbish", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog"];
+
+        var used = [];// word list of words used so it dosent repeat them
+        var current = 0;
+
+        function subBtu(){// function for submit button
+
+
+}
+function newWord(){
+current = pick();
+
+}
+
+
+
+        function pick() {
+    var out = Math.floor(Math.random() *  words.length); // pick random number from list index
+if (words.length == used.length){ // what to do when out of new words
+used = [];
+return pick();
+}
+ for (var i = 0; i < words.length; i++) { // make sure its not used
+   if(out == used[i] ){// what to do if a word was used
+     return pick();
+     console.log("old word")
+
+   } else{ // what to do if not used
+      used.push(out);
+      say(words[out]);
+      console.log("new word" + words[out]);
+      return out;
+
+
+   }
+ }
+  }
+  
+        
+        function say (word){ // function to quickly say something
+            speechSynthesis.cancel();
+            speechSynthesis.speak(new SpeechSynthesisUtterance(word));
+       
+        }
+    </script>
+</body>
+</html>
