@@ -105,7 +105,7 @@ transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s eas
 </head>
 <body>
 <h1>Hearing Test</h1>
-<button onclick="start();" id="start">Start</button>
+<button onclick="start();" id="start">Start Game</button>
 
 <p id="info"  class="game" >enter perceived word, spelling matters!</p>
 
@@ -123,7 +123,7 @@ transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s eas
 
     
         
-        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "flower", "flour", "Your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord"];
+        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "Your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord"];
         var current = 0; // were currently picked word is stored
 
         var used = [];// word list of words used so it dosent repeat them
@@ -163,7 +163,7 @@ document.getElementById("input").value = ""; // clear text box each submition
 if (input == words[current]){ // if you get correct answer
     current = pick();
 
-    var complements = ["ok okay now write " + words[current], "good job how about now you'll write " + words[current] + " for me", "thats some quality work, say it be amazing if you could write " + words[current], "you know the drill " + words[current] + " is the word", words[current] + "now", "alright write " + words[current] + " immediately", "awesome work... " + words[current] + " is the new word", "hey do you mind spelling " + words[current] + " for me please", "nice job bud, next assignment is. " + words[current]]
+    var complements = ["ok okay now write " + words[current], "good job how about now you'll write " + words[current] + " for me", "thats some quality work, say it be amazing if you could write " + words[current], "you know the drill " + words[current] + " is the word", words[current] + " now", "alright write " + words[current] + " immediately", "awesome work... " + words[current] + " is the new word", "hey do you mind spelling " + words[current] + " for me please", "nice job bud, next assignment is. " + words[current]]
 
  say(complements[ Math.floor(Math.random() *  complements.length)] ); // says random index for compliment 
 
