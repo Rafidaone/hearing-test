@@ -15,6 +15,23 @@ body{
 
 }
 
+#start{
+position: absolute;
+ left: 25%;
+top: 25%;
+width: 50%;
+height: 25%;
+font-size: 500%;
+
+}
+
+.game{
+
+    opacity: 0;
+display: none;
+
+}
+
 button{
 
     background-color: rgba(13, 193, 22, 0.2);
@@ -46,6 +63,10 @@ color: rgb(54, 54, 54);
 display: block;
     margin-left: auto;
     margin-right: auto;
+
+    transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s ease-in-out;
+
+
 }
 
 h1{
@@ -61,6 +82,8 @@ p{
     text-align: center;
 font-size: larger;
 
+transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s ease-in-out;
+
 
 }
 
@@ -72,6 +95,9 @@ font-size: larger;
   margin-right: auto;
   flex-direction: row;
 
+  transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s ease-in-out;
+
+
 }
 
 
@@ -79,12 +105,13 @@ font-size: larger;
 </head>
 <body>
 <h1>Hearing Test</h1>
+<button onclick="start();" id="start">Start</button>
 
-<p id="info">enter perceived word, spelling matters!</p>
+<p id="info"  class="game" >enter perceived word, spelling matters!</p>
 
-  <textarea id="input" placeholder="word goes here"></textarea>
-  <div id="buttons">
-    <button onclick="Speak();">Speak</button>
+  <textarea  class="game" id="input" placeholder="word goes here"></textarea>
+  <div id="buttons" class="game">
+    <button onclick="Speak();">Repeat</button>
   <button onclick="newWord();">Give up</button>
   <button onclick="subBtu();">Submit</button>
 
@@ -96,10 +123,28 @@ font-size: larger;
 
     
         
-        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "flower", "flour", "Your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun"];
+        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "flower", "flour", "Your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord"];
         var current = 0; // were currently picked word is stored
 
         var used = [];// word list of words used so it dosent repeat them
+
+
+
+
+
+function start(){// start button function, primarly to get user interaction for test to speach to work
+
+    current = pick(); // pick random word to say initialy
+say("all right from now on when i tell you to write a word, you will write it... lets begin with " + words[current])
+document.getElementById("buttons").classList.remove("game");
+document.getElementById("info").classList.remove("game");
+document.getElementById("input").classList.remove("game");
+document.getElementById("start").classList.add("game");
+
+
+
+
+}
 
 
 
@@ -110,7 +155,7 @@ document.getElementById("input").value = ""; // clear text box each submition
 
 
    // list of compliments and offenses when you get answer -- have to add the lists with vars in them here so they get updated and not stay static
-   var offense = ["no you bumb, what in the world makes you think i said " + input, "not quite, " + input + " more like " + words[current], "NO! not " + input + " its " + words[current], "oh my god, out of all the words you landed on " + input + "seriously?", "yeah of course it is " + input + ". in your dreams", "damn " + input + " is a foolish way to spell " + words[current]]
+   var offense = ["no you bumb, what in the world makes you think i said " + input, "not quite, " + input + " more like " + words[current], "NO! not " + input + " its " + words[current], "oh my god, out of all the words you landed on " + input + "seriously?", "yeah of course it is " + input + ". in your dreams", "damn " + input + " is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]]
 
 
 
@@ -118,7 +163,7 @@ document.getElementById("input").value = ""; // clear text box each submition
 if (input == words[current]){ // if you get correct answer
     current = pick();
 
-    var complements = ["ok okay now write " + words[current], "good job how about now you'll write me " + words[current], "thats some quality work, say it be amazing if you could write " + words[current], "you know the drill " + words[current] + " is the word", words[current] + "now", "alright write " + words[current] + " immediately"]
+    var complements = ["ok okay now write " + words[current], "good job how about now you'll write " + words[current] + " for me", "thats some quality work, say it be amazing if you could write " + words[current], "you know the drill " + words[current] + " is the word", words[current] + "now", "alright write " + words[current] + " immediately", "awesome work... " + words[current] + " is the new word", "hey do you mind spelling " + words[current] + " for me please", "nice job bud, next assignment is. " + words[current]]
 
  say(complements[ Math.floor(Math.random() *  complements.length)] ); // says random index for compliment 
 
@@ -136,9 +181,9 @@ document.addEventListener('keydown', function(event) {// event handler so when y
 });
 
 
-function newWord(){ // newword button
+function newWord(){ // give up button
 current = pick();
-say(words[current]);
+say("the new word is " + words[current]);
 }
 
 
