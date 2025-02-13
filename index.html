@@ -16,6 +16,7 @@ body{
 }
 
 #start{
+    z-index: 5;
 position: absolute;
  left: 25%;
 top: 25%;
@@ -26,9 +27,9 @@ font-size: 500%;
 }
 
 .game{
-
+z-index: 4;
     opacity: 0;
-display: none;
+
 
 }
 
@@ -99,6 +100,18 @@ transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s eas
 
 
 }
+button:hover{
+    cursor: pointer;
+    box-shadow: 0 5px 6px 0 rgba(14, 34, 90, 0.766);
+
+}
+
+
+button:active {
+      transform: translatey(5px);
+      background-color: rgba(13, 193, 22, 0.592);
+
+  }
 
 
     </style>
@@ -123,7 +136,7 @@ transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s eas
 
     
         
-        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "Your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord"];
+        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord"];
         var current = 0; // were currently picked word is stored
 
         var used = [];// word list of words used so it dosent repeat them
@@ -139,8 +152,9 @@ say("all right from now on when i tell you to write a word, you will write it...
 document.getElementById("buttons").classList.remove("game");
 document.getElementById("info").classList.remove("game");
 document.getElementById("input").classList.remove("game");
-document.getElementById("start").classList.add("game");
 
+// document.getElementById("start").classList.add("game");
+document.getElementById("start").remove();
 
 
 
