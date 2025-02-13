@@ -71,7 +71,7 @@ display: block;
 }
 
 h1{
-    font-size: 200%;
+    font-size: 250%;
 font-family: Arial, Helvetica, sans-serif;
 text-shadow: 0px 2px 6px rgba(37, 93, 249, 0.766);
 text-align: center;
@@ -125,7 +125,6 @@ button:active {
   <textarea  class="game" id="input" placeholder="word goes here"></textarea>
   <div id="buttons" class="game">
     <button onclick="Speak();">Repeat</button>
-  <button onclick="newWord();">Give up</button>
   <button onclick="subBtu();">Submit</button>
 
 </div>
@@ -133,12 +132,9 @@ button:active {
 
     <script>
         // word list from witch random words are pulled from
-
-    
-        
         var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord"];
         var current = 0; // were currently picked word is stored
-
+        var attempt = 0; // var for attempt to display hint after
         var used = [];// word list of words used so it dosent repeat them
 
 
@@ -148,13 +144,16 @@ button:active {
 function start(){// start button function, primarly to get user interaction for test to speach to work
 
     current = pick(); // pick random word to say initialy
-say("all right from now on when i tell you to write a word, you will write it... lets begin with " + words[current])
+say("all right from now on when i tell you to write a word, you will write it... lets begin with... " + words[current]);
+
 document.getElementById("buttons").classList.remove("game");
 document.getElementById("info").classList.remove("game");
 document.getElementById("input").classList.remove("game");
 
-// document.getElementById("start").classList.add("game");
 document.getElementById("start").remove();
+
+
+document.getElementById("info").innerHTML = "Write  <b> " + words[current] + "</b> in the text filed below";
 
 
 
@@ -165,40 +164,47 @@ document.getElementById("start").remove();
         function subBtu(){// ------------------- function for submit button/enter key
 var input = document.getElementById("input").value.toLowerCase().replaceAll(" ", "").replaceAll("\n", ""); // first get valse of textarea, then make it all lower case, then remove any spaces then any enter key lines
 console.log(input);
-document.getElementById("input").value = ""; // clear text box each submition
+document.getElementById("input").value = ""; // clear text box after each submition
 
 
-   // list of compliments and offenses when you get answer -- have to add the lists with vars in them here so they get updated and not stay static
-   var offense = ["no you bumb, what in the world makes you think i said " + input, "not quite, " + input + " more like " + words[current], "NO! not " + input + " its " + words[current], "oh my god, out of all the words you landed on " + input + "seriously?", "yeah of course it is " + input + ". in your dreams", "damn " + input + " is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]]
+   // list of offenses when you get answer wrong -- have to add the lists with vars in them here so they get updated and not stay static
+   var offense = ["no you bumb, what in the world makes you think i said. " + input, "not quite. " + input + " more like. " + words[current], "NO! not. " + input, "oh my god, out of all the words you landed on. " + input + " seriously?", "yeah of course it is. " + input + ". in your dreams", "wow. " + input + " is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]];
 
 
 
 
 if (input == words[current]){ // if you get correct answer
     current = pick();
-
-    var complements = ["ok okay now write " + words[current], "good job how about now you'll write " + words[current] + " for me", "thats some quality work, say it be amazing if you could write " + words[current], "you know the drill " + words[current] + " is the word", words[current] + " now", "alright write " + words[current] + " immediately", "awesome work... " + words[current] + " is the new word", "hey do you mind spelling " + words[current] + " for me please", "nice job bud, next assignment is. " + words[current]]
+// same as obove but compliments for right answer
+    var complements = ["ok okay now write " + words[current], "good job now you'll write. " + words[current] + " for me", "thats some quality work, write. " + words[current], "you know the drill. " + words[current] + " is the word", words[current] + " now", "alright write. " + words[current] + " immediately", "awesome work... " + words[current] + " is the new word", "hey do you mind writing. " + words[current] + " for me please", "nice job bud, next assignment is. " + words[current]];
+    document.getElementById("info").innerHTML = "Correct!";
+attempt = 0; // reset attempt var after each right statment
 
  say(complements[ Math.floor(Math.random() *  complements.length)] ); // says random index for compliment 
 
-} else{
-    say(offense[ Math.floor(Math.random() *  offense.length)]) // same story for offences
+} else{ //                                                       ------------- when there is a wrong answer     
+    say(offense[ Math.floor(Math.random() *  offense.length)]); // same story for offences
+   attempt = attempt + 1; // attempt system for hint after 3ed try
+   if (attempt == 1){
+    document.getElementById("info").innerHTML = "no its not " + input;
+   } else if (attempt == 2){
+    document.getElementById("info").innerHTML = "nope try again";
+   } else{
+    document.getElementById("info").innerHTML = "the word was <b> " + words[current] + "</b>";
 
+   }
 
 }
 }
 
-document.addEventListener('keydown', function(event) {// event handler so when you press enter it submits
+document.addEventListener('keydown', function(event) {// event handler so when you press enter it submits. sourced from : https://developer.mozilla.org/en-US/docs/Web/API/Element/keydown_event
   if (event.keyCode === 13 || event.which === 13) {
     subBtu();
   }
 });
 
 
-function newWord(){ // give up button
-current = pick();
-say("the new word is " + words[current]);
-}
+
 
 
 function Speak(){ // repeat button
@@ -208,7 +214,7 @@ say("may you kind individual write " + words[current]);
 
 } else{
 
-    say("did i stutter? i said " + words[current]);
+    say("i said. " + words[current]);
 
 }
 
@@ -216,7 +222,8 @@ say("may you kind individual write " + words[current]);
 
 
         function pick() {
-    var out = Math.floor(Math.random() *  words.length); // pick random number from list index
+            // the math.random * length formula was sourced from : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    var out = Math.floor(Math.random() *  words.length); // pick random number from list i
 if (words.length == used.length){ // what to do when out of new words
 used = [];
 return pick();
@@ -228,7 +235,7 @@ return pick();
 
    } else{ // what to do if not used
       used.push(out);
-      console.log("new word" + words[out]);
+      console.log("new word " + words[out]);
       return out;
 
 
@@ -236,9 +243,9 @@ return pick();
  }
   }
   
-        
+        // all the speach synthesis reltaed code was sourced from: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
         function say (word){ // function to quickly say something
-            speechSynthesis.cancel();
+            speechSynthesis.cancel(); 
             speechSynthesis.speak(new SpeechSynthesisUtterance(word));
        
         }
