@@ -36,6 +36,8 @@ z-index: 4;
 
 }
 
+
+
 button{
 
     background-color: rgba(13, 193, 22, 0.2);
@@ -165,7 +167,6 @@ say("all right from now on when i tell you to write a word, you will write it...
 document.getElementById("buttons").classList.remove("game");
 document.getElementById("info").classList.remove("game");
 document.getElementById("input").classList.remove("game");
-document.getElementById("grade").classList.remove("game");
 
 document.getElementById("start").remove();
 
@@ -207,6 +208,8 @@ if (attempt == 0){ // give a point for correct or patial cred answer
 
 }
 attempt = 0; // reset attempt var after each right statment
+
+document.getElementById("grade").classList.remove("game");// make the grade appear now so the animation loads
 
 
 document.getElementById("grade").innerHTML = Math.round(right / total * 100) + "%";
