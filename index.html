@@ -183,9 +183,14 @@ var input = document.getElementById("input").value.toLowerCase().replaceAll(" ",
 console.log(input);
 document.getElementById("input").value = ""; // clear text box after each submition
 
+// cheak if its empty
+if (input == ""){
+document.getElementById("info").innerHTML = "enter a word"
+return
+}
 
    // list of offenses when you get answer wrong -- have to add the lists with vars in them here so they get updated and not stay static
-   var offense = ["no you bum, what in the world makes you think i said. " + input, "not quite. " + input + " more like. " + words[current], "NO! not. " + input, "oh my god, out of all the words you landed on. " + input + " seriously?", "yeah of course it is. " + input + ". in your dreams", "wow. " + input + " is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]];
+   var offense = ["no you bum, what in the world makes you think i said. " + input, "not quite. " + input + " more like. " + words[current], "NO! not. " + input, "oh my god, out of all the words you landed on. " + input + " seriously?", "yeah of course it is. " + input + ". in your dreams", "wow. " + input + ". is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]];
 
 
 
