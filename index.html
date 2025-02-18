@@ -7,7 +7,10 @@
 
     <style>
 
-
+@font-face {
+  font-family: 'marker'; /* the font Permanent Marker Designed by Font Diner was downloaded from  https://fonts.google.com/ */
+  src: url('marker.ttf'); 
+}
 
 
 body{
@@ -88,6 +91,18 @@ transition: opacity 0.3s ease-in-out, color 0.4s ease-in-out, font-size 0.3s eas
 
 }
 
+#grade{
+    font-family: 'marker', sans-serif; 
+color: rgb(159, 4, 4);
+position: absolute;
+right: 5%;
+top: -25px;
+rotate: 15deg;
+font-size: 50px;
+
+text-decoration: underline;
+}
+
 
 #buttons{
     margin-top: 15px;
@@ -124,19 +139,20 @@ button:active {
 
   <textarea  class="game" id="input" placeholder="word goes here"></textarea>
   <div id="buttons" class="game">
-    <button onclick="Speak();">Repeat</button>
+    <button onclick="    say('i said. ' + words[current]);">Repeat</button>
   <button onclick="subBtu();">Submit</button>
 
 </div>
-
+<p id="grade" class="game"></p>
 
     <script>
         // word list from witch random words are pulled from
-        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord"];
+        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord", "egg", "pterodactyl"];
         var current = 0; // were currently picked word is stored
         var attempt = 0; // var for attempt to display hint after
         var used = [];// word list of words used so it dosent repeat them
-
+        var total = 0; // var for total answers done
+        var right = 0; // how many ansers gotten correct
 
 
 
@@ -149,6 +165,7 @@ say("all right from now on when i tell you to write a word, you will write it...
 document.getElementById("buttons").classList.remove("game");
 document.getElementById("info").classList.remove("game");
 document.getElementById("input").classList.remove("game");
+document.getElementById("grade").classList.remove("game");
 
 document.getElementById("start").remove();
 
@@ -168,17 +185,32 @@ document.getElementById("input").value = ""; // clear text box after each submit
 
 
    // list of offenses when you get answer wrong -- have to add the lists with vars in them here so they get updated and not stay static
-   var offense = ["no you bumb, what in the world makes you think i said. " + input, "not quite. " + input + " more like. " + words[current], "NO! not. " + input, "oh my god, out of all the words you landed on. " + input + " seriously?", "yeah of course it is. " + input + ". in your dreams", "wow. " + input + " is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]];
+   var offense = ["no you bum, what in the world makes you think i said. " + input, "not quite. " + input + " more like. " + words[current], "NO! not. " + input, "oh my god, out of all the words you landed on. " + input + " seriously?", "yeah of course it is. " + input + ". in your dreams", "wow. " + input + " is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]];
 
 
 
 
 if (input == words[current]){ // if you get correct answer
+    total = total + 1;
+
+if (attempt == 0){ // give a point for correct or patial cred answer
+    right = right + 1;
+} else if (attempt == 0.6){
+    right = right + 2;
+} else if (attempt == 2){
+    right = right + 0.25;
+
+}
+attempt = 0; // reset attempt var after each right statment
+
+
+document.getElementById("grade").innerHTML = Math.round(right / total * 100) + "%";
+
+
     current = pick();
 // same as obove but compliments for right answer
     var complements = ["ok okay now write " + words[current], "good job now you'll write. " + words[current] + " for me", "thats some quality work, write. " + words[current], "you know the drill. " + words[current] + " is the word", words[current] + " now", "alright write. " + words[current] + " immediately", "awesome work... " + words[current] + " is the new word", "hey do you mind writing. " + words[current] + " for me please", "nice job bud, next assignment is. " + words[current]];
     document.getElementById("info").innerHTML = "Correct!";
-attempt = 0; // reset attempt var after each right statment
 
  say(complements[ Math.floor(Math.random() *  complements.length)] ); // says random index for compliment 
 
@@ -205,22 +237,6 @@ document.addEventListener('keydown', function(event) {// event handler so when y
 
 
 
-
-
-function Speak(){ // repeat button
-if (used.length == 0){// cheaks if used is empty witch means its the first word and needs to be randomized
-current = pick();
-say("may you kind individual write " + words[current]);
-
-} else{
-
-    say("i said. " + words[current]);
-
-}
-
-}
-
-
         function pick() {
             // the math.random * length formula was sourced from : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     var out = Math.floor(Math.random() *  words.length); // pick random number from list i
@@ -245,7 +261,7 @@ return pick();
   
         // all the speach synthesis reltaed code was sourced from: https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
         function say (word){ // function to quickly say something
-            speechSynthesis.cancel(); 
+            speechSynthesis.cancel();  
             speechSynthesis.speak(new SpeechSynthesisUtterance(word));
        
         }
