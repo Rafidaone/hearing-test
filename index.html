@@ -141,7 +141,7 @@ button:active {
 
   <textarea  class="game" id="input" placeholder="word goes here"></textarea>
   <div id="buttons" class="game">
-    <button onclick="    say('i said. ' + words[current]);">Repeat</button>
+    <button onclick="    say('i said. ' + words[current]); document.getElementById('input').focus();    ">Repeat</button>
   <button onclick="subBtu();">Submit</button>
 
 </div>
@@ -159,7 +159,7 @@ button:active {
 
 
 
-function start(){// start button function, primarly to get user interaction for test to speach to work
+function start(){// start button function, primarly to get user interaction for text to speach to work
 
     current = pick(); // pick random word to say initialy
 say("all right from now on when i tell you to write a word, you will write it... lets begin with... " + words[current]);
@@ -180,6 +180,8 @@ document.getElementById("info").innerHTML = "Write  <b> " + words[current] + "</
 
 
         function subBtu(){// ------------------- function for submit button/enter key
+document.getElementById("input").focus();// focuse text field so you dont type on acsident after pressing it
+
 var input = document.getElementById("input").value.toLowerCase().replaceAll(" ", "").replaceAll("\n", ""); // first get valse of textarea, then make it all lower case, then remove any spaces then any enter key lines
 console.log(input);
 document.getElementById("input").value = ""; // clear text box after each submition
