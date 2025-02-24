@@ -149,7 +149,7 @@ button:active {
 
     <script>
         // word list from witch random words are pulled from
-        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord", "egg", "pterodactyl", "raccoon"];
+        var words = ["individual", "know", "no", "but", "butt", "cite", "sight", "site", "flower", "flour", "your", "you're", "buy", "bye", "by", "brake", "break", "tobacco", "train", "crowbar", "orange", "lawnmower", "derogatory", "onomatopoeia", "contract", "table", "door", "trash", "rubbish", "goose", "heard", "herd", "painting", "roller", "tractor", "toaster", "piano", "clock", "tree", "frog", "bucket", "rain", "magma", "leg", "light", "kitchen", "court", "spike", "eye", "i", "brand", "bounds", "gradually", "see", "sea", "son", "sun", "cord", "egg", "pterodactyl", "raccoon", "carrot"];
         var current = 0; // were currently picked word is stored
         var attempt = 0; // var for attempt to display hint after
         var used = [];// word list of words used so it dosent repeat them
@@ -189,12 +189,12 @@ document.getElementById("input").value = ""; // clear text box after each submit
 
 // cheak if its empty
 if (input == ""){
-document.getElementById("info").innerHTML = "enter a word"
-return
+document.getElementById("info").innerHTML = "enter a word";
+return;
 }
 
    // list of offenses when you get answer wrong -- have to add the lists with vars in them here so they get updated and not stay static
-   var offense = ["no you bum, what in the world makes you think i said. " + input, "not quite. " + input + " more like. " + words[current], "NO! not. " + input, "oh my god, out of all the words you landed on. " + input + " seriously?", "yeah of course it is. " + input + ". in your dreams", "wow. " + input + ". is a foolish way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]];
+   var offense = ["no you bum, what in the world makes you think i said. " + input, "not quite. " + input + " more like. " + words[current], "NO! not. " + input, "oh my god, out of all the words you landed on. " + input + " seriously?", "yeah of course it is. " + input + ". in your dreams", "wow. " + input + ". is a silly way to spell " + words[current], "nah uh", "ah yes. " + input + " my favorite way to spell " + words[current]];
 
 
 
@@ -249,16 +249,16 @@ document.addEventListener('keydown', function(event) {// event handler so when y
 
 
         function pick() {
-            // the math.random * length formula was sourced from : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+            // the Math.floor(Math.random() *  words.length) formula was sourced from : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     var out = Math.floor(Math.random() *  words.length); // pick random number from list i
 if (words.length == used.length){ // what to do when out of new words
 used = [];
-return pick();
+return pick(); // run the pick function agian for it to pick a new word with empty used list
 }
  for (var i = 0; i < words.length; i++) { // make sure its not used
    if(out == used[i] ){// what to do if a word was used
      return pick();
-     console.log("old word")
+     console.log("old word");
 
    } else{ // what to do if not used
       used.push(out);
@@ -274,6 +274,7 @@ return pick();
         function say (word){ // function to quickly say something
             speechSynthesis.cancel();  
             speechSynthesis.speak(new SpeechSynthesisUtterance(word));
+            console.log(word);
        
         }
 
